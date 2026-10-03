@@ -1,6 +1,7 @@
-//    App Menu Is Back
+//    ubuntu-appmenu
 //    GNOME Shell extension
 //    @fthx 2025, based on GNOME Shell 48's panel.js AppMenuButton code
+//    @liamhatherton 2026
 
 import Atk from 'gi://Atk';
 import Clutter from 'gi://Clutter';
@@ -43,7 +44,7 @@ const AppMenuButton = GObject.registerClass({
         this._iconBox = new St.Bin({
             style_class: 'app-menu-icon',
             y_align: Clutter.ActorAlign.CENTER,
-            style: 'margin-right: 4px; -st-icon-style: symbolic',
+            style: '-st-icon-style: symbolic',
         });
         this._iconBox.add_effect(iconEffect);
         this._container.add_child(this._iconBox);

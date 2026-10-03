@@ -1,0 +1,19 @@
+/* Restored from GNOME Shell 48's _panel.scss (removed upstream in 49,
+   commit 06b63304c "panel: Remove AppMenu button"). */
+
+#appMenu {
+    spacing: 6px;
+}
+
+#appMenu .label-shadow {
+    color: transparent;
+}
+
+#appMenu .panel-status-menu-box {
+    padding: 0 6px;
+    spacing: 6px;
+}
+
+#appMenu .app-menu-icon {
+    -st-icon-style: symbolic;
+}
