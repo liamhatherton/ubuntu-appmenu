@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.appmenunx" path="/org/gnome/shell/extensions/appmenunx/">
+    <key name="desaturate-icon" type="b">
+      <default>true</default>
+      <summary>Desaturate application icon</summary>
+      <description>Show the focused application's icon in the app menu button in grayscale.</description>
+    </key>
+    <key name="symbolic-icon" type="b">
+      <default>true</default>
+      <summary>Request symbolic application icon</summary>
+      <description>Use the application's symbolic (monochrome) icon in the app menu button when one is available.</description>
+    </key>
+  </schema>
+</schemalist>

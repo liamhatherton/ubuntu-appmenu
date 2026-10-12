@@ -1,4 +1,4 @@
-//    ubuntu-appmenu
+//    AppMenuNX
 //    GNOME Shell extension
 //    @fthx 2025, based on GNOME Shell 48's panel.js AppMenuButton code
 //    @liamhatherton 2026
@@ -14,6 +14,7 @@ import { AppMenu } from 'resource:///org/gnome/shell/ui/appMenu.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as Overview from 'resource:///org/gnome/shell/ui/overview.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const PANEL_ICON_SIZE = 16;
 const APP_MENU_ICON_MARGIN = 0;
@@ -21,8 +22,10 @@ const APP_MENU_ICON_MARGIN = 0;
 const AppMenuButton = GObject.registerClass({
     Signals: { 'changed': {} },
 }, class AppMenuButton extends PanelMenu.Button {
-    _init() {
+    _init(settings) {
         super._init(0.0, null, true);
+
+        this._settings = settings;
 
         this.accessible_role = Atk.Role.MENU;
 
@@ -40,14 +43,18 @@ const AppMenuButton = GObject.registerClass({
         this._container = new St.BoxLayout({ style_class: 'panel-status-menu-box' });
         bin.set_child(this._container);
 
-        let iconEffect = new Clutter.DesaturateEffect();
         this._iconBox = new St.Bin({
             style_class: 'app-menu-icon',
             y_align: Clutter.ActorAlign.CENTER,
-            style: '-st-icon-style: symbolic',
         });
-        this._iconBox.add_effect(iconEffect);
+        this._iconEffect = new Clutter.DesaturateEffect();
+        this._iconBox.add_effect(this._iconEffect);
         this._container.add_child(this._iconBox);
+
+        this._syncDesaturation();
+        this._settings.connectObject(
+            'changed::desaturate-icon', this._syncDesaturation.bind(this),
+            'changed::symbolic-icon', this._syncIconStyle.bind(this), this);
 
         this._label = new St.Label({
             y_expand: true,
@@ -104,10 +111,24 @@ const AppMenuButton = GObject.registerClass({
         });
     }
 
+    _syncDesaturation() {
+        this._iconEffect.enabled = this._settings.get_boolean('desaturate-icon');
+    }
+
     _syncIcon(app) {
         const icon = app.create_icon_texture(PANEL_ICON_SIZE - APP_MENU_ICON_MARGIN);
         icon.set_style_class_name('app-menu-icon');
         this._iconBox.set_child(icon);
+        this._syncIconStyle();
+    }
+
+    _syncIconStyle() {
+        const icon = this._iconBox.get_child();
+        if (!icon)
+            return;
+
+        const symbolic = this._settings.get_boolean('symbolic-icon');
+        icon.set_style(`-st-icon-style: ${symbolic ? 'symbolic' : 'regular'};`);
     }
 
     _onAppStateChanged(appSys, app) {
@@ -192,14 +213,17 @@ const AppMenuButton = GObject.registerClass({
         Shell.WindowTracker.get_default().disconnectObject(this);
         Shell.AppSystem.get_default().disconnectObject(this);
         global.window_manager.disconnectObject(this);
+        this._settings.disconnectObject(this);
+        this._settings = null;
 
         super.destroy();
     }
 });
 
-export default class AppMenuIsBackExtension {
+export default class AppMenuNXExtension extends Extension {
     enable() {
-        this._appMenuButton = new AppMenuButton();
+        this._settings = this.getSettings();
+        this._appMenuButton = new AppMenuButton(this._settings);
         if (!Main.panel.statusArea['appmenu-indicator'])
             Main.panel.addToStatusArea('appmenu-indicator', this._appMenuButton, -1, 'left');
     }
@@ -207,5 +231,6 @@ export default class AppMenuIsBackExtension {
     disable() {
         this._appMenuButton?.destroy();
         this._appMenuButton = null;
+        this._settings = null;
     }
 }

@@ -1,12 +1,13 @@
 {
-  "description": "The good old original app menu. Uses native GNOME Shell button.",
-  "name": "ubuntu-appmenu",
+  "description": "The good old original app menu. Uses native GNOME Shell button. Optional desaturated app icon.",
+  "name": "AppMenuNX",
   "shell-version": [
     "49",
     "50",
     "51"
   ],
   "url": "https://github.com/liamhatherton/ubuntu-appmenu",
-  "uuid": "ubuntu-appmenu@liamhatherton",
-  "version": 999
+  "uuid": "appmenunx@liamhatherton",
+  "version": 999,
+  "settings-schema": "org.gnome.shell.extensions.appmenunx"
 }
