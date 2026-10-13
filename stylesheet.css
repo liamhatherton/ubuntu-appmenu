@@ -10,7 +10,9 @@
 }
 
 #appMenu .panel-status-menu-box {
-    padding: 0 6px;
+    /* top right bottom left — left reduced from 6px to tighten the icon's
+       gap from the button edge. Tweak padding-left to taste. */
+    padding: 0 6px 0 1px;
     spacing: 6px;
 }
 
