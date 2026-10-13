@@ -11,5 +11,20 @@
       <summary>Request symbolic application icon</summary>
       <description>Use the application's symbolic (monochrome) icon in the app menu button when one is available.</description>
     </key>
+    <key name="bold-label" type="b">
+      <default>false</default>
+      <summary>Bold button text</summary>
+      <description>Show the application name in the panel button in bold.</description>
+    </key>
+    <key name="show-distro-when-idle" type="b">
+      <default>true</default>
+      <summary>Show distro logo and name when no app is focused</summary>
+      <description>When no application is active, show the operating system's logo and name (from /etc/os-release) in the panel button instead of hiding it.</description>
+    </key>
+    <key name="align-menu-left" type="b">
+      <default>true</default>
+      <summary>Align menu with the left edge of the button</summary>
+      <description>Open the app menu so its left edge lines up with the left edge of the panel button, instead of centring it under the button.</description>
+    </key>
   </schema>
 </schemalist>

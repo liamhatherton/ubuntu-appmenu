@@ -36,6 +36,36 @@ export default class AppMenuNXPreferences extends ExtensionPreferences {
         settings.bind('symbolic-icon', symbolicRow, 'active',
             Gio.SettingsBindFlags.DEFAULT);
 
+        const boldRow = new Adw.SwitchRow({
+            title: 'Bold button text',
+            subtitle: 'Show the app name on the top bar in bold',
+        });
+        group.add(boldRow);
+
+        settings.bind('bold-label', boldRow, 'active',
+            Gio.SettingsBindFlags.DEFAULT);
+
+        const distroRow = new Adw.SwitchRow({
+            title: 'Show distro when no app is active',
+            subtitle: 'Display the OS logo and name (e.g. Ubuntu 26.04.1 LTS) on an empty desktop',
+        });
+        group.add(distroRow);
+
+        settings.bind('show-distro-when-idle', distroRow, 'active',
+            Gio.SettingsBindFlags.DEFAULT);
+
+        const behaviorGroup = new Adw.PreferencesGroup({ title: 'Menu' });
+        page.add(behaviorGroup);
+
+        const alignRow = new Adw.SwitchRow({
+            title: 'Align menu to left of button',
+            subtitle: 'Line the dropdown up with the button\'s left edge instead of centring it',
+        });
+        behaviorGroup.add(alignRow);
+
+        settings.bind('align-menu-left', alignRow, 'active',
+            Gio.SettingsBindFlags.DEFAULT);
+
         window._settings = settings;
     }
 }

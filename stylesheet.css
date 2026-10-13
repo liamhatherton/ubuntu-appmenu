@@ -13,3 +13,7 @@
     padding: 0 6px;
     spacing: 6px;
 }
+
+#appMenu .appmenunx-bold {
+    font-weight: bold;
+}
