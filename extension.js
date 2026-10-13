@@ -18,8 +18,7 @@ import * as Overview from 'resource:///org/gnome/shell/ui/overview.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-//const PANEL_ICON_SIZE = 16;
-const PANEL_ICON_SIZE = 24;
+const PANEL_ICON_SIZE = 16;
 const APP_MENU_ICON_MARGIN = 0;
 
 // Name and logo of the running OS, from /etc/os-release, e.g. "Ubuntu 26.04.1".
@@ -311,11 +310,34 @@ const AppMenuButton = GObject.registerClass({
             (this._targetApp.get_state() === Shell.AppState.STARTING ||
                 this._targetApp.get_busy());
 
-        // The distro label has no menu, so it isn't clickable.
-        this.reactive = visible && !isBusy && this._targetApp != null;
+        // The distro label has no menu; clicking it opens the overview instead
+        // (see vfunc_event).
+        this.reactive = visible && !isBusy &&
+            (this._targetApp != null || this._showingDistro);
 
         this.menu.setApp(this._targetApp);
         this.emit('changed');
+    }
+
+    vfunc_event(event) {
+        // With no app focused the button shows the distro logo and name, which
+        // has no menu. Toggle the workspace overview instead.
+        if (!this._targetApp && this._showingDistro) {
+            const type = event.type();
+            const isClick = type === Clutter.EventType.BUTTON_PRESS ||
+                type === Clutter.EventType.TOUCH_BEGIN;
+            const isActivateKey = type === Clutter.EventType.KEY_PRESS &&
+                [Clutter.KEY_Return, Clutter.KEY_KP_Enter, Clutter.KEY_space]
+                    .includes(event.get_key_symbol());
+            if (isClick || isActivateKey) {
+                this.menu?.close();
+                Main.overview.toggle();
+                return Clutter.EVENT_STOP;
+            }
+            return Clutter.EVENT_PROPAGATE;
+        }
+
+        return super.vfunc_event(event);
     }
 
     destroy() {
