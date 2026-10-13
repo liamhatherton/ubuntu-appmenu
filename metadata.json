@@ -1,13 +1,13 @@
 {
-  "description": "The good old original app menu. Uses native GNOME Shell button. Optional desaturated app icon.",
-  "name": "AppMenuNX",
+  "description": "A remastered version of the AppMenu extension for GNOME Shell 49+ that works with Ubuntu 24.04 and later.",
+  "name": "ugappmenunx",
   "shell-version": [
     "49",
     "50",
     "51"
   ],
-  "url": "https://github.com/liamhatherton/ubuntu-appmenu",
-  "uuid": "appmenunx@liamhatherton",
-  "version": 999,
-  "settings-schema": "org.gnome.shell.extensions.appmenunx"
+  "url": "https://github.com/liamhatherton/ugappmenunx",
+  "uuid": "ugappmenunx@liamhatherton",
+  "version": 1,
+  "settings-schema": "org.gnome.shell.extensions.ugappmenunx"
 }

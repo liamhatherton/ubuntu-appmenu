@@ -1,4 +1,4 @@
-//    AppMenuNX
+//    ugappmenunx
 //    GNOME Shell extension
 //    @fthx 2025, based on GNOME Shell 48's panel.js AppMenuButton code
 //    @liamhatherton 2026
@@ -191,9 +191,9 @@ const AppMenuButton = GObject.registerClass({
     _syncLabelStyle() {
         // The distro name always uses normal weight; bold applies to app names.
         if (this._settings.get_boolean('bold-label') && !this._showingDistro)
-            this._label.add_style_class_name('appmenunx-bold');
+            this._label.add_style_class_name('ugappmenunx-bold');
         else
-            this._label.remove_style_class_name('appmenunx-bold');
+            this._label.remove_style_class_name('ugappmenunx-bold');
     }
 
     _syncDesaturation() {
@@ -332,12 +332,12 @@ const AppMenuButton = GObject.registerClass({
     }
 });
 
-export default class AppMenuNXExtension extends Extension {
+export default class ugappmenunxExtension extends Extension {
     enable() {
         this._settings = this.getSettings();
         this._appMenuButton = new AppMenuButton(this._settings);
-        if (!Main.panel.statusArea['appmenu-indicator'])
-            Main.panel.addToStatusArea('appmenu-indicator', this._appMenuButton, -1, 'left');
+        if (!Main.panel.statusArea['ugappmenunx-indicator'])
+            Main.panel.addToStatusArea('ugappmenunx-indicator', this._appMenuButton, -1, 'left');
     }
 
     disable() {

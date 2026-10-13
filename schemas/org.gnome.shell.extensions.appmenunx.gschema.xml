@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.gnome.shell.extensions.appmenunx" path="/org/gnome/shell/extensions/appmenunx/">
+  <schema id="org.gnome.shell.extensions.ugappmenunx" path="/org/gnome/shell/extensions/ugappmenunx/">
     <key name="desaturate-icon" type="b">
       <default>true</default>
       <summary>Desaturate application icon</summary>

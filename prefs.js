@@ -1,11 +1,11 @@
-//    AppMenuNX preferences
+//    ugappmenunx preferences
 
 import Adw from 'gi://Adw';
 import Gio from 'gi://Gio';
 
 import { ExtensionPreferences } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-export default class AppMenuNXPreferences extends ExtensionPreferences {
+export default class ugappmenunxPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
 
